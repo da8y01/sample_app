@@ -5,7 +5,8 @@ gem 'rails', '4.1.0'
 gem 'pg'
 
 group :development, :test do
-  gem 'rspec-rails', '2.13.1'
+  # gem 'rspec-rails', '2.13.1'
+  gem 'rspec-rails', '~> 2.14.0.rc1'
 end
 
 group :test do
@@ -17,6 +18,9 @@ end
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'sprockets', '2.11.0'
 gem 'bcrypt-ruby', '3.1.2'
+gem 'faker', '1.1.2'
+gem 'will_paginate', '3.0.4'
+gem 'bootstrap-will_paginate', '0.0.9'
 
 gem 'sass-rails', '4.0.1'
 gem 'uglifier', '2.1.1'
