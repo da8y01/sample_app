@@ -20,9 +20,15 @@ describe "Authentication" do
       it { should have_title('Sign in') }
       it { should have_selector('div.alert.alert-error') }
 
+      it { should_not have_link('Users') }
+      it { should_not have_link('Profile') }
+
       describe "after visiting another page" do
         before { click_link "Home" }
         it { should_not have_selector('div.alert.alert-error') }
+
+        it { should_not have_link('Users') }
+      	it { should_not have_link('Profile') }
       end
     end
 
@@ -80,6 +86,36 @@ describe "Authentication" do
         describe "visiting the user index" do
           before { visit users_path }
           it { should have_title('Sign in') }
+        end
+      end
+
+      describe "when attempting to visit a protected page" do
+        before do
+          visit edit_user_path(user)
+          fill_in "Email",    with: user.email
+          fill_in "Password", with: user.password
+          click_button "Sign in"
+        end
+
+        describe "after signing in" do
+
+          it "should render the desired protected page" do
+            expect(page).to have_title('Edit user')
+          end
+
+          describe "when signing in again" do
+            before do
+              click_link "Sign out"
+              visit signin_path
+              fill_in "Email",    with: user.email
+              fill_in "Password", with: user.password
+              click_button "Sign in"
+            end
+
+            it "should render the default (profile) page" do
+              expect(page).to have_title(user.name)
+            end
+          end
         end
       end
     end
